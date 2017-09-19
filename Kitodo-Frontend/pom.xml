@@ -11,4 +11,12 @@
 
     <artifactId>kitodo-frontend</artifactId>
 
+    <dependencies>
+        <dependency>
+            <groupId>org.primefaces</groupId>
+            <artifactId>primefaces</artifactId>
+            <version>6.1</version>
+        </dependency>
+    </dependencies>
+
 </project>
