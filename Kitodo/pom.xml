@@ -52,6 +52,11 @@
             <version>3.0-SNAPSHOT</version>
         </dependency>
         <dependency>
+            <groupId>org.kitodo</groupId>
+            <artifactId>kitodo-frontend</artifactId>
+            <version>3.0-SNAPSHOT</version>
+        </dependency>
+        <dependency>
             <groupId>avalon-framework</groupId>
             <artifactId>avalon-framework</artifactId>
             <version>4.1.5</version>
