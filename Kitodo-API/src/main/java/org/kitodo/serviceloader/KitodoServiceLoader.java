@@ -25,20 +25,13 @@ import java.nio.file.DirectoryStream;
 import java.nio.file.FileSystems;
 import java.nio.file.Files;
 import java.nio.file.Path;
-import java.nio.file.Paths;
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.Collection;
-import java.util.Enumeration;
-import java.util.Properties;
-import java.util.ServiceLoader;
+import java.util.*;
+
+import com.sun.org.apache.xpath.internal.operations.Equals;
+import org.apache.commons.io.FileUtils;
 import java.util.jar.JarEntry;
 import java.util.jar.JarFile;
 
-import javax.faces.context.FacesContext;
-import javax.servlet.http.HttpSession;
-
-import org.apache.commons.io.FileUtils;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
@@ -82,7 +75,7 @@ public class KitodoServiceLoader<T> {
      * @return A module with type T.
      */
     @SuppressWarnings("unchecked")
-    public T loadModule() {
+    public T loadModule() throws IOException {
 
         loadModulesIntoClasspath();
         loadBeans();
