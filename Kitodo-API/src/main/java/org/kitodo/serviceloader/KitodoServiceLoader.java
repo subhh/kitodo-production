@@ -32,6 +32,7 @@ import java.util.Collection;
 import java.util.Enumeration;
 import java.util.Properties;
 import java.util.ServiceLoader;
+
 import java.util.jar.JarEntry;
 import java.util.jar.JarFile;
 
@@ -41,6 +42,9 @@ import javax.servlet.http.HttpSession;
 import org.apache.commons.io.FileUtils;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
+
+import javax.faces.context.FacesContext;
+import javax.servlet.http.HttpSession;
 
 public class KitodoServiceLoader<T> {
     private Class clazz;
@@ -146,7 +150,6 @@ public class KitodoServiceLoader<T> {
             logger.error("Classpath could not be accessed", e.getMessage());
         }
     }
-
     /**
      * If the found jar files have frontend files, they will be extracted and copied into the frontend folder
      * of the core module. Before copying, existing frontend files of the same module will be deleted from the

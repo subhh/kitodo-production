@@ -16,18 +16,21 @@ import de.sub.goobi.helper.Helper;
 import de.sub.goobi.helper.Page;
 import de.sub.goobi.helper.ldap.Ldap;
 
-import java.io.BufferedReader;
-import java.io.File;
-import java.io.FileInputStream;
-import java.io.IOException;
-import java.io.InputStreamReader;
+import java.io.*;
+import java.net.MalformedURLException;
+import java.net.URISyntaxException;
+import java.net.URL;
 import java.nio.charset.StandardCharsets;
-import java.util.ArrayList;
-import java.util.LinkedList;
-import java.util.List;
-import java.util.Objects;
+import java.nio.file.*;
+import java.security.CodeSource;
+import java.security.SecureRandom;
+import java.util.*;
+import java.util.jar.JarEntry;
+import java.util.jar.JarFile;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
+import java.util.stream.Stream;
+import java.util.zip.ZipInputStream;
 
 import javax.annotation.PostConstruct;
 import javax.enterprise.context.SessionScoped;
@@ -36,9 +39,12 @@ import javax.faces.model.SelectItem;
 import javax.inject.Named;
 import javax.servlet.http.HttpSession;
 
+import org.apache.commons.io.FileUtils;
+import org.apache.commons.io.filefilter.WildcardFileFilter;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.hibernate.Session;
+import org.kitodo.api.frontend.FrontendInterface;
 import org.kitodo.data.database.beans.LdapGroup;
 import org.kitodo.data.database.beans.Project;
 import org.kitodo.data.database.beans.User;
@@ -49,7 +55,10 @@ import org.kitodo.dto.ProjectDTO;
 import org.kitodo.dto.UserDTO;
 import org.kitodo.dto.UserGroupDTO;
 import org.kitodo.model.LazyDTOModel;
+import org.kitodo.serviceloader.KitodoServiceLoader;
 import org.kitodo.services.ServiceManager;
+
+import static org.jboss.weld.util.Preconditions.checkNotNull;
 
 @Named("BenutzerverwaltungForm")
 @SessionScoped
@@ -108,8 +117,15 @@ public class BenutzerverwaltungForm extends BasisForm {
      * bean is constructed.
      */
     @PostConstruct
-    public void initializeUserList() {
+    public void initializeUserList() throws IOException, URISyntaxException {
+        initialiseFrontendModule();
         filterKein();
+    }
+
+    private FrontendInterface initialiseFrontendModule() {
+        KitodoServiceLoader<FrontendInterface> loader = new KitodoServiceLoader<>(FrontendInterface.class,
+                ConfigCore.getParameter("moduleFolder"));
+        return loader.loadModule();
     }
 
     public String filterKeinMitZurueck() {
