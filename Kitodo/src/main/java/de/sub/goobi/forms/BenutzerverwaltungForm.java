@@ -22,6 +22,9 @@ import java.io.FileInputStream;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.nio.charset.StandardCharsets;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
 import java.util.ArrayList;
 import java.util.LinkedList;
 import java.util.List;
@@ -114,11 +117,18 @@ public class BenutzerverwaltungForm extends BasisForm {
      * bean is constructed.
      */
     @PostConstruct
-    public void initializeUserList() {
+    public void initializeUserList() throws IOException {
         initialiseFrontendModule();
+        copyXhtmlFilesAsSymLinks();
         filterKein();
     }
 
+    private void copyXhtmlFilesAsSymLinks() throws IOException {
+        File file = new File("Kitodo-Frontend/src/main/resources/META-INF/resources/firstpage.xhtml");
+        Path targetToFile = Paths.get(file.getPath());
+        Path linkToBeCreated = Paths.get("Kitodo/src/main/webapp/pages/testmodule/firstpage.xhtml");
+        Files.createLink(linkToBeCreated, targetToFile);
+    }
     private FrontendInterface initialiseFrontendModule() {
         KitodoServiceLoader<FrontendInterface> loader = new KitodoServiceLoader<>(FrontendInterface.class,
                 ConfigCore.getParameter("moduleFolder"));

@@ -20,23 +20,23 @@
     xmlns:p="http://primefaces.org/ui">
 
     <f:view locale="#{SpracheForm.locale}">
-        <ui:include src="/newpages/inc/head.xhtml" />
+        <ui:include src="/pages/inc/head.xhtml" />
         <h:body>
             <table class="headTable" cellspacing="0" cellpadding="0"
                    style="padding-left:5px;padding-right:5px;margin-top:5px;">
-                <ui:include src="/newpages/inc/tbl_Kopf.xhtml" />
+                <ui:include src="/pages/inc/tbl_Kopf.xhtml" />
             </table>
             <table cellspacing="5" cellpadding="0" class="layoutTable"
                    align="center">
                 <tr>
-                    <ui:include src="/newpages/inc/tbl_Navigation.xhtml" />
+                    <ui:include src="/pages/inc/tbl_Navigation.xhtml" />
                     <td valign="top" class="layoutInhalt">
                         <!-- Breadcrumb -->
                         <h:panelGrid id="id0" width="100%" columns="1"
                                      styleClass="layoutInhaltKopf">
                             <h:panelGroup id="id1">
                                 <h:link id="id2" value="#{msgs.startseite}"
-                                        outcome="/newpages/Main"/>
+                                        outcome="/pages/Main"/>
                                 <f:verbatim> &#8250;&#8250; </f:verbatim>
                                 <h:outputText id="id3" value="Frontend module"/>
                             </h:panelGroup>
@@ -46,13 +46,13 @@
                                 <h:outputText>Follow me to second page</h:outputText>
                             </h:link>
                             <br/>
-                            <h:link outcome="/newpages/Main">
+                            <h:link outcome="/pages/Main">
                                 <h:outputText value="Kitodo Core"/>
                             </h:link>
                         </p:panel>
                     </td>
                 </tr>
-                <ui:include src="/newpages/inc/tbl_Fuss.xhtml" />
+                <ui:include src="/pages/inc/tbl_Fuss.xhtml" />
             </table>
         </h:body>
     </f:view>
