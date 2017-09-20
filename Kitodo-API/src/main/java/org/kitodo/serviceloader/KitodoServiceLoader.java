@@ -75,7 +75,7 @@ public class KitodoServiceLoader<T> {
      * @return A module with type T.
      */
     @SuppressWarnings("unchecked")
-    public T loadModule() throws IOException {
+    public T loadModule() {
 
         loadModulesIntoClasspath();
         loadBeans();
