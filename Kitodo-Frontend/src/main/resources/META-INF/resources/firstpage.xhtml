@@ -1,4 +1,3 @@
-<!DOCTYPE html>
 <!--
  *
  * (c) Kitodo. Key to digital objects e. V. <contact@kitodo.org>
@@ -12,48 +11,30 @@
  *
 -->
 
-<html
-	xmlns="http://www.w3.org/1999/xhtml"
-	xmlns:f="http://xmlns.jcp.org/jsf/core"
-	xmlns:h="http://xmlns.jcp.org/jsf/html"
-	xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
-    xmlns:p="http://primefaces.org/ui">
 
-    <f:view locale="#{SpracheForm.locale}">
-        <ui:include src="/pages/inc/head.xhtml" />
-        <h:body>
-            <table class="headTable" cellspacing="0" cellpadding="0"
-                   style="padding-left:5px;padding-right:5px;margin-top:5px;">
-                <ui:include src="/pages/inc/tbl_Kopf.xhtml" />
-            </table>
-            <table cellspacing="5" cellpadding="0" class="layoutTable"
-                   align="center">
-                <tr>
-                    <ui:include src="/pages/inc/tbl_Navigation.xhtml" />
-                    <td valign="top" class="layoutInhalt">
-                        <!-- Breadcrumb -->
-                        <h:panelGrid id="id0" width="100%" columns="1"
-                                     styleClass="layoutInhaltKopf">
-                            <h:panelGroup id="id1">
-                                <h:link id="id2" value="#{msgs.startseite}"
-                                        outcome="/pages/Main"/>
-                                <f:verbatim> &#8250;&#8250; </f:verbatim>
-                                <h:outputText id="id3" value="Frontend module"/>
-                            </h:panelGroup>
-                        </h:panelGrid>
-                        <p:panel header="Firstpage">
-                            <h:link outcome="/test/secondpage">
-                                <h:outputText>Follow me to second page</h:outputText>
-                            </h:link>
-                            <br/>
-                            <h:link outcome="/pages/Main">
-                                <h:outputText value="Kitodo Core"/>
-                            </h:link>
-                        </p:panel>
-                    </td>
-                </tr>
-                <ui:include src="/pages/inc/tbl_Fuss.xhtml" />
-            </table>
-        </h:body>
-    </f:view>
-</html>
+    <ui:composition
+            template="/WEB-INF/templates/base.xhtml"
+            xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+            xmlns="http://www.w3.org/1999/xhtml"
+              xmlns:h="http://xmlns.jcp.org/jsf/html"
+            xmlns:p="http://primefaces.org/ui">
+        <ui:define name="content">
+            <p:panel header="Firstpage">
+                <h:link id="id2"
+                        outcome="/pages/kitodo-frontend/test/secondpage.jsf" >
+                    <h:outputText value="#{SampleForm.value} Test "></h:outputText>
+                </h:link>
+
+                <br/>
+                <h:link outcome="/pages/Main">
+                    <h:outputText value="Kitodo Core"/>
+                </h:link>
+
+                <h:link id="id3"
+                        outcome="/pages/kitodo-frontend/test/secondpage.jsf" >
+                    <h:outputText value="#{ExtendedForm.value}"></h:outputText>
+                </h:link>
+            </p:panel>
+        </ui:define>
+    </ui:composition>
+

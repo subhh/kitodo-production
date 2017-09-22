@@ -35,6 +35,9 @@ import java.util.jar.JarFile;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
+import javax.faces.context.FacesContext;
+import javax.servlet.http.HttpSession;
+
 public class KitodoServiceLoader<T> {
     private Class clazz;
     private String modulePath = "";
@@ -86,6 +89,51 @@ public class KitodoServiceLoader<T> {
         return loader.iterator().next();
     }
 
+    private void loadBeans() {
+        try {
+
+            Path moduleFolder = FileSystems.getDefault().getPath(modulePath);
+            DirectoryStream<Path> stream = Files.newDirectoryStream(moduleFolder, "*.jar");
+
+            for (Path f : stream) {
+                JarFile jarFile = new JarFile(f.toString());
+
+                if (hasFrontendFiles(jarFile)) {
+
+                    Enumeration<JarEntry> e = jarFile.entries();
+
+                    URL[] urls = {new URL("jar:file:" + f.toString() + "!/")};
+                    URLClassLoader cl = URLClassLoader.newInstance(urls);
+
+                    while (e.hasMoreElements()) {
+                        JarEntry je = e.nextElement();
+
+                        // TODO: konvention: name der xhtml datei + Form, bspw.: sample.xhtml -> SampleForm.java
+                        // deshalb wird hier auf "Form.class" gesucht
+
+                        if (je.isDirectory() || !je.getName().endsWith("Form.class")) {
+                            continue;
+                        }
+
+                        String className = je.getName().substring(0, je.getName().length() - 6);
+                        className = className.replace('/', '.');
+                        Class c = cl.loadClass(className);
+
+                        String beanName = className.substring(className.lastIndexOf(".") + 1).trim();
+
+                        FacesContext facesContext = FacesContext.getCurrentInstance();
+                        HttpSession session = (HttpSession) facesContext.getExternalContext().getSession(false);
+
+                        session.getServletContext().setAttribute(beanName, c.newInstance());
+                    }
+                }
+            }
+        }
+        catch (Exception e) {
+            logger.error("Classpath could not be accessed", e.getMessage());
+        }
+    }
+    
     /**
      * Loads bean classes and registers them to the FacesContext. Afterwards they can be used in all
      * frontend files
