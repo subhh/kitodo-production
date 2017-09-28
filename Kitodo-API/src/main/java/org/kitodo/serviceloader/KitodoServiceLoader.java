@@ -89,6 +89,10 @@ public class KitodoServiceLoader<T> {
         return loader.iterator().next();
     }
 
+    /**
+     * Loads bean classes and registers them to the FacesContext. Afterwards they can be used in all
+     * frontend files
+     */
     private void loadBeans() {
         try {
 
