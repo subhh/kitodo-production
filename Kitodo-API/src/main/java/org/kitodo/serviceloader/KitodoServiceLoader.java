@@ -21,10 +21,7 @@ import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
 import java.net.URL;
 import java.net.URLClassLoader;
-import java.nio.file.DirectoryStream;
-import java.nio.file.FileSystems;
-import java.nio.file.Files;
-import java.nio.file.Path;
+import java.nio.file.*;
 import java.util.*;
 
 import com.sun.org.apache.xpath.internal.operations.Equals;
@@ -87,55 +84,6 @@ public class KitodoServiceLoader<T> {
         ServiceLoader<T> loader = ServiceLoader.load(clazz);
 
         return loader.iterator().next();
-    }
-
-    /**
-     * Loads bean classes and registers them to the FacesContext. Afterwards they can be used in all
-     * frontend files
-     */
-    private void loadBeans() {
-        try {
-
-            Path moduleFolder = FileSystems.getDefault().getPath(modulePath);
-            DirectoryStream<Path> stream = Files.newDirectoryStream(moduleFolder, "*.jar");
-
-            for (Path f : stream) {
-                JarFile jarFile = new JarFile(f.toString());
-
-                if (hasFrontendFiles(jarFile)) {
-
-                    Enumeration<JarEntry> e = jarFile.entries();
-
-                    URL[] urls = {new URL("jar:file:" + f.toString() + "!/")};
-                    URLClassLoader cl = URLClassLoader.newInstance(urls);
-
-                    while (e.hasMoreElements()) {
-                        JarEntry je = e.nextElement();
-
-                        // TODO: konvention: name der xhtml datei + Form, bspw.: sample.xhtml -> SampleForm.java
-                        // deshalb wird hier auf "Form.class" gesucht
-
-                        if (je.isDirectory() || !je.getName().endsWith("Form.class")) {
-                            continue;
-                        }
-
-                        String className = je.getName().substring(0, je.getName().length() - 6);
-                        className = className.replace('/', '.');
-                        Class c = cl.loadClass(className);
-
-                        String beanName = className.substring(className.lastIndexOf(".") + 1).trim();
-
-                        FacesContext facesContext = FacesContext.getCurrentInstance();
-                        HttpSession session = (HttpSession) facesContext.getExternalContext().getSession(false);
-
-                        session.getServletContext().setAttribute(beanName, c.newInstance());
-                    }
-                }
-            }
-        }
-        catch (Exception e) {
-            logger.error("Classpath could not be accessed", e.getMessage());
-        }
     }
     
     /**
