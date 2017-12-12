@@ -143,7 +143,7 @@ public class KitodoServiceLoader<T> {
      * of the core module. Before copying, existing frontend files of the same module will be deleted from the
      * core module. Afterwards the created temporary folder will be deleted as well.
      */
-    // TODO: Relative Pfade müssen zu absoluten Pfaden angepasst werden
+    // TODO: Use absolute path instead of relative path
     private void loadFrontendFilesIntoCore() {
 
         Path moduleFolder = FileSystems.getDefault().getPath(modulePath);
