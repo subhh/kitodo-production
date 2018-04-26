@@ -1,0 +1,50 @@
+version: '3'
+
+services:
+  tomcat:
+    build: ./tomcat
+    ports:
+      - "8080:8080"
+      - "8000:8000"
+    links:
+      - db
+      - elastic
+    volumes:
+      - "../Kitodo/target/kitodo-3.0-SNAPSHOT.war:/usr/local/tomcat/webapps/kitodo.war"
+      - "../Kitodo/local/:/usr/local/kitodo/"
+
+  db:
+    image: mariadb:latest
+    volumes:
+      - "./db:/var/lib/mysql"
+    ports:
+      - "3306:3306"
+    environment:
+      MYSQL_ROOT_PASSWORD: kitodo
+      MYSQL_DATABASE: kitodo
+      MYSQL_USER: kitodo
+      MYSQL_PASSWORD: kitodo
+
+  elastic:
+    image: elasticsearch:5.4.3
+    environment:
+          - cluster.name=docker-cluster
+          - bootstrap.memory_lock=true
+          - "ES_JAVA_OPTS=-Xms512m -Xmx512m"
+    ulimits:
+      memlock:
+        soft: -1
+        hard: -1
+    deploy:
+      resources:
+        limits:
+          cpus: '0.50'
+          memory: 1g
+        reservations:
+          cpus: '0.25'
+          memory: 512M
+    ports:
+      - "9200:9200"
+      - "9300:9300"
+    volumes:
+      - "./esdata:/usr/share/elasticsearch/data"
