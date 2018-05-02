@@ -8,3 +8,5 @@
 /javadoc
 # local build of docs with mkdocs
 /site
+docker/db
+docker/esdata
