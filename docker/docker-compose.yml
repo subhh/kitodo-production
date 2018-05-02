@@ -11,7 +11,7 @@ services:
       - elastic
     volumes:
       - "../Kitodo/target/kitodo-3.0-SNAPSHOT.war:/usr/local/tomcat/webapps/kitodo.war"
-      - "../Kitodo/local/:/usr/local/kitodo/"
+      - "../docker/local/:/usr/local/kitodo/"
 
   db:
     image: mariadb:latest
