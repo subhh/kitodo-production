@@ -1789,4 +1789,56 @@ public class ProzessverwaltungForm extends TemplateBaseForm {
     public void setSelectedProcesses(List<ProcessDTO> selectedProcesses) {
         this.selectedProcesses = selectedProcesses;
     }
+
+    /**
+     * Get ruleset ID.
+     * @return ruleset ID.
+     */
+    public int getRulesetID() {
+        if (Objects.nonNull(this.process) && Objects.nonNull(this.process.getRuleset())) {
+            return this.process.getRuleset().getId();
+        } else {
+            return 0;
+        }
+    }
+
+    /**
+     * Set ruleset by ID.
+     * @param id ruleset ID.
+     */
+    public void setRulesetID(int id) {
+        if (!this.process.getRuleset().getId().equals(id)) {
+            try {
+                this.process.setRuleset(serviceManager.getRulesetService().getById(id));
+            } catch (DAOException e) {
+                Helper.setErrorMessage("ERROR: unable to save ruleset to process!");
+            }
+        }
+    }
+
+    /**
+     * Get docket ID.
+     * @return docket ID.
+     */
+    public int getDocketID() {
+        if (Objects.nonNull(this.process) && Objects.nonNull(this.process.getDocket())) {
+            return this.process.getDocket().getId();
+        } else {
+            return 0;
+        }
+    }
+
+    /**
+     * Set docket by ID.
+     * @param id ID of docket.
+     */
+    public void setDocketID(int id) {
+        if (!this.process.getDocket().getId().equals(id)) {
+            try {
+                this.process.setDocket(serviceManager.getDocketService().getById(id));
+            } catch (DAOException e) {
+                Helper.setErrorMessage("ERROR: unable to save docket to process!");
+            }
+        }
+    }
 }

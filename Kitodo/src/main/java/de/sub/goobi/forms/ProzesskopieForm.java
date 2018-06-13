@@ -2038,4 +2038,30 @@ public class ProzesskopieForm implements Serializable {
     public void setWorkflowConditions(List<String> workflowConditions) {
         this.workflowConditions = workflowConditions;
     }
+
+    /**
+     * Get ruleset ID.
+     * @return ruleset ID.
+     */
+    public int getRulesetID() {
+        if (Objects.nonNull(this.prozessKopie) && Objects.nonNull(this.prozessKopie.getRuleset())) {
+            return this.prozessKopie.getRuleset().getId();
+        } else {
+            return 0;
+        }
+    }
+
+    /**
+     * Set ruleset by ID.
+     * @param id ruleset ID.
+     */
+    public void setRulesetID(int id) {
+        if (!this.prozessKopie.getRuleset().getId().equals(id)) {
+            try {
+                this.prozessKopie.setRuleset(serviceManager.getRulesetService().getById(id));
+            } catch (DAOException e) {
+                Helper.setErrorMessage("ERROR: unable to save ruleset to process copy!");
+            }
+        }
+    }
 }

@@ -58,11 +58,11 @@ public class HelperForm implements Serializable {
      *
      * @return list of rulesets as SelectItems
      */
-    public List<SelectItem> getRegelsaetze() {
+    public List<SelectItem> getRulesets() {
         List<SelectItem> myPrefs = new ArrayList<>();
         List<Ruleset> temp = serviceManager.getRulesetService().getByQuery("from Ruleset ORDER BY title");
         for (Ruleset ruleset : temp) {
-            myPrefs.add(new SelectItem(ruleset, ruleset.getTitle(), null));
+            myPrefs.add(new SelectItem(ruleset.getId(), ruleset.getTitle(), null));
         }
         return myPrefs;
     }
@@ -76,7 +76,7 @@ public class HelperForm implements Serializable {
         List<SelectItem> answer = new ArrayList<>();
         List<Docket> temp = serviceManager.getDocketService().getByQuery("from Docket ORDER BY title");
         for (Docket d : temp) {
-            answer.add(new SelectItem(d, d.getTitle(), null));
+            answer.add(new SelectItem(d.getId(), d.getTitle(), null));
         }
         return answer;
     }

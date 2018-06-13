@@ -12,10 +12,12 @@
 package org.kitodo.forms;
 
 import de.sub.goobi.config.ConfigCore;
+import de.sub.goobi.forms.HelperForm;
 import de.sub.goobi.helper.Helper;
 
 import java.text.MessageFormat;
 import java.util.List;
+import java.util.Map;
 import java.util.Objects;
 
 import javax.annotation.PostConstruct;
@@ -186,7 +188,7 @@ public class TemplateForm extends TemplateBaseForm {
      * @return null
      */
     public String save() {
-        if (this.template != null && this.template.getTitle() != null) {
+        if (Objects.nonNull(this.template) && Objects.nonNull(this.template.getTitle())) {
             if (!this.template.getTitle().equals(this.title) && this.title != null
                     && !renameAfterProcessTitleChanged()) {
                 return null;
@@ -384,5 +386,58 @@ public class TemplateForm extends TemplateBaseForm {
      */
     public void setTitle(String title) {
         this.title = title;
+    }
+
+    /**
+     * Get ruleset ID.
+     * @return ruleset ID.
+     */
+    public int getRulesetID() {
+        if (Objects.nonNull(this.template) && Objects.nonNull(this.template.getRuleset())) {
+            return this.template.getRuleset().getId();
+        } else {
+            return 0;
+        }
+    }
+
+    /**
+     * Set ruleset by ID.
+     * @param id ruleset ID.
+     */
+    public void setRulesetID(int id) {
+        if (!this.template.getRuleset().getId().equals(id)) {
+            try {
+                this.template.setRuleset(serviceManager.getRulesetService().getById(id));
+            } catch (DAOException e) {
+                Helper.setErrorMessage("ERROR: unable to save ruleset to template!");
+            }
+        }
+    }
+
+    /**
+     * Get docket ID.
+     * @return docket ID.
+     */
+    public int getDocketID() {
+        if (Objects.nonNull(this.template) && Objects.nonNull(this.template.getDocket())) {
+            return this.template.getDocket().getId();
+        } else {
+            return 0;
+        }
+
+    }
+
+    /**
+     * Set docket by ID.
+     * @param id ID of docket.
+     */
+    public void setDocketID(int id) {
+        if (!this.template.getDocket().getId().equals(id)) {
+            try {
+                this.template.setDocket(serviceManager.getDocketService().getById(id));
+            } catch (DAOException e) {
+                Helper.setErrorMessage("ERROR: unable to save docket to template!");
+            }
+        }
     }
 }

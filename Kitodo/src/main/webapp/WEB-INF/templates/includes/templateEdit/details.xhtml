@@ -48,17 +48,17 @@
         <p:row>
             <div>
                 <p:outputLabel for="ruleset" value="#{msgs.ruleset}"/>
-                <p:selectOneMenu id="ruleset" value="#{TemplateForm.template.ruleset}" converter="#{rulesetConverter}"
-                                 required="#{empty param['editForm:saveButtonToggler']}">
-                    <f:selectItems value="#{HelperForm.regelsaetze}"/>
+                <p:selectOneMenu id="ruleset" value="#{TemplateForm.rulesetID}"
+                                 required="#{not empty param['editForm:save']}">
+                    <f:selectItems value="#{HelperForm.rulesets}"/>
                     <p:ajax event="change" oncomplete="jQuery('#editForm\\:saveButtonToggler').click()"/>
                 </p:selectOneMenu>
             </div>
 
             <div>
                 <p:outputLabel for="docket" value="#{msgs.docket}"/>
-                <p:selectOneMenu id="docket" value="#{TemplateForm.template.docket}" converter="#{docketConverter}"
-                                 required="#{empty param['editForm:saveButtonToggler']}">
+                <p:selectOneMenu id="docket" value="#{TemplateForm.docketID}"
+                                 required="#{not empty param['editForm:save']}">
                     <f:selectItems value="#{HelperForm.dockets}"/>
                     <p:ajax event="change" oncomplete="jQuery('#editForm\\:saveButtonToggler').click()"/>
                 </p:selectOneMenu>
