@@ -24,10 +24,10 @@
                  rows="#{LoginForm.myBenutzer.tableSize}"
                  paginatorTemplate="{FirstPageLink} {PreviousPageLink} {CurrentPageReport} {NextPageLink} {LastPageLink}"
                  paginatorPosition="bottom">
-        <p:column headerText="#{msgs.user}">
+        <p:column headerText="#{msgs.user}" sortBy="#{item.surname}">
             <h:outputText value="#{item.surname}, #{item.name}"/>
         </p:column>
-        <p:column headerText="#{msgs.location}">
+        <p:column headerText="#{msgs.location}" sortBy="#{item.location}">
             <h:outputText value="#{item.location}"/>
         </p:column>
         <p:column headerText="#{msgs.userGroups}">

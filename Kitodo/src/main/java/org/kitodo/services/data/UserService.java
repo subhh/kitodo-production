@@ -16,6 +16,7 @@ import java.io.File;
 import java.io.FileInputStream;
 import java.io.IOException;
 import java.io.InputStreamReader;
+import java.io.StringReader;
 import java.net.URI;
 import java.nio.charset.StandardCharsets;
 import java.nio.file.Paths;
@@ -29,10 +30,14 @@ import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 import java.util.stream.Collectors;
 
+import javax.json.Json;
+import javax.json.JsonArray;
 import javax.json.JsonObject;
+import javax.json.JsonReader;
 
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
+import org.apache.lucene.search.SortField;
 import org.elasticsearch.index.query.BoolQueryBuilder;
 import org.elasticsearch.index.query.Operator;
 import org.elasticsearch.index.query.QueryBuilder;
@@ -321,8 +326,9 @@ public class UserService extends SearchService<User, UserDTO, UserDAO> implement
     @Override
     @SuppressWarnings("unchecked")
     public List<UserDTO> findAll(String sort, Integer offset, Integer size, Map filters) throws DataException {
+        sort = Objects.isNull(sort) ? "" : sort;
         if (serviceManager.getSecurityAccessService().isAdminOrHasAuthorityGlobal(AUTHORITY_TITLE_VIEW_ALL)) {
-            return convertJSONObjectsToDTOs(findAllDocuments(sortByLogin(), offset, size), false);
+            return convertJSONObjectsToDTOs(findAllDocuments(sort, offset, size), false);
         }
         if (serviceManager.getSecurityAccessService().hasAuthorityForAnyClient(AUTHORITY_TITLE_VIEW_ALL)) {
             return getAllActiveUsersVisibleForCurrentUser();
@@ -576,6 +582,32 @@ public class UserService extends SearchService<User, UserDTO, UserDAO> implement
 
     private String sortByLogin() {
         return SortBuilders.fieldSort(UserTypeField.LOGIN.getKey()).order(SortOrder.ASC).toString();
+    }
+
+    private String sortBy(String sortParameter) {
+        String[] sortParameterParts = sortParameter.split(":");
+        if (sortParameterParts.length != 2) {
+            logger.error("ERROR: unable to sort users by '" + sortParameter + "'!");
+            return "";
+        } else {
+            try (JsonReader jsonReader = Json.createReader(new StringReader(sortParameter))) {
+                JsonObject sortObject = jsonReader.readObject();
+                if (sortObject.keySet().size() > 1) {
+                    logger.error("ERROR: unable to determine sort parameter in JSON string " + sortParameter);
+                    return "";
+                }
+                for (String sortField : sortObject.keySet()) {
+                    SortOrder sortOrder = sortObject.get(sortField).toString().equals("asc") ? SortOrder.ASC : SortOrder.DESC;
+                    if (!Arrays.stream(UserTypeField.values()).map(UserTypeField::getName).collect(Collectors.toList()).contains(sortField)) {
+                        logger.error("ERROR: '" + sortField + "' is not a valid user type field!");
+                        return "";
+                    } else {
+                        return SortBuilders.fieldSort(sortField).order(sortOrder).toString();
+                    }
+                }
+            }
+        }
+        return "";
     }
 
     /**

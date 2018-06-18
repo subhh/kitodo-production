@@ -24,7 +24,7 @@
                  rows="#{LoginForm.myBenutzer.tableSize}"
                  paginatorTemplate="{FirstPageLink} {PreviousPageLink} {CurrentPageReport} {NextPageLink} {LastPageLink}"
                  paginatorPosition="bottom">
-        <p:column headerText="#{msgs.userGroup}">
+        <p:column headerText="#{msgs.userGroup}" sortBy="#{item.title}">
             <h:outputText value="#{item.title}"/>
         </p:column>
         <p:column headerText="#{msgs.actions}" styleClass="actionsColumn">

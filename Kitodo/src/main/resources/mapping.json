@@ -942,7 +942,8 @@
                             "type": "keyword",
                             "ignore_above": 256
                         }
-                    }
+                    },
+                    "fielddata": true
                 },
                 "login": {
                     "type": "text",
@@ -1047,7 +1048,8 @@
                             "type": "keyword",
                             "ignore_above": 256
                         }
-                    }
+                    },
+                    "fielddata": true
                 },
                 "userGroups": {
                     "properties": {
