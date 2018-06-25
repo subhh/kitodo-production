@@ -942,8 +942,7 @@
                             "type": "keyword",
                             "ignore_above": 256
                         }
-                    },
-                    "fielddata": true
+                    }
                 },
                 "login": {
                     "type": "text",

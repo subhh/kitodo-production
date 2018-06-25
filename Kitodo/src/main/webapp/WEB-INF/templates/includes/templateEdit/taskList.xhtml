@@ -28,7 +28,7 @@
         </p:column>
 
         <!-- title -->
-        <p:column headerText="#{msgs.task}" id="taskTitle">
+        <p:column headerText="#{msgs.task}" id="taskTitle" sortBy="#{item.title.keyword}">
             <p:rowToggler />
             <h:outputText value="#{item.title}"/>
         </p:column>

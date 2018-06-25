@@ -23,14 +23,14 @@
                      paginatorTemplate="{FirstPageLink} {PreviousPageLink} {CurrentPageReport} {NextPageLink} {LastPageLink}"
                      paginatorPosition="bottom">
             <p:column styleClass="checkboxListColumn" selectionMode="multiple"/>
-            <p:column id="titleColumn" headerText="#{msgs.processTitle}" filterBy="#{item.title}" sortBy="#{item.title}">
+            <p:column id="titleColumn" headerText="#{msgs.processTitle}" filterBy="#{item.title}" sortBy="#{item.title.keyword}">
                 <h:outputText value="#{item.title}"/>
             </p:column>
             <p:column id="progressColumn" styleClass="progressColumn" headerText="#{msgs.status}">
                 <ui:include src="/WEB-INF/templates/includes/processes/progressColumn.xhtml"/>
             </p:column>
-            <p:column headerText="#{msgs.project}">
-                <h:outputText value="#{process.project.title}"/>
+            <p:column headerText="#{msgs.project}" sortBy="#{item.project.title.keyword}">
+                <h:outputText value="#{item.project.title}"/>
             </p:column>
             <p:column styleClass="actionsColumn" headerText="#{msgs.actions}">
                 <h:link id="editProcess" outcome="/pages/processEdit" title="#{msgs.processEdit}">
