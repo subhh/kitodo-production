@@ -18,6 +18,14 @@
         xmlns:p="http://primefaces.org/ui">
     <ui:define name="contentHeader">
         <h3>#{msgs.tasksCurrent}</h3>
+        <h:form>
+            <p:selectBooleanCheckbox id="liveScrollMode"
+                                     title="#{msgs.liveScroll}"
+                                     value="#{AktuelleSchritteForm.listLiveScroll}"
+                                     styleClass="input listModeSwitch">
+                <p:ajax event="change" update="tasksTabView" onstart="PF('loadingDialog').show()" oncomplete="PF('loadingDialog').hide()"/>
+            </p:selectBooleanCheckbox>
+        </h:form>
     </ui:define>
 
     <ui:define name="pageTabView">

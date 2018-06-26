@@ -20,39 +20,37 @@
                  id="usersTable"
                  value="#{UserForm.lazyDTOModel}"
                  lazy="true"
-                 paginator="true"
+                 paginator="#{not BenutzerverwaltungForm.listLiveScroll}"
+                 scrollable="true"
+                 scrollRows="#{LoginForm.myBenutzer.tableSize}"
+                 scrollHeight="90%"
+                 liveScroll="#{BenutzerverwaltungForm.listLiveScroll}"
                  rows="#{LoginForm.myBenutzer.tableSize}"
+                 resizableColumns="true"
                  paginatorTemplate="{FirstPageLink} {PreviousPageLink} {CurrentPageReport} {NextPageLink} {LastPageLink}"
                  paginatorPosition="bottom">
+        <ui:include src="/WEB-INF/templates/includes/ajaxLoading.xhtml"/>
         <p:column headerText="#{msgs.user}" sortBy="#{item.surname.keyword}">
-            <h:outputText value="#{item.surname}, #{item.name}"/>
+            <h:outputText value="#{item.surname}, #{item.name}" title="#{item.surname}, #{item.name}"/>
         </p:column>
-        <p:column headerText="#{msgs.location}" sortBy="#{item.location.keyword}">
-            <h:outputText value="#{item.location}"/>
+        <p:column headerText="#{msgs.location}" sortBy="#{item.location.keyword}" width="10%">
+            <h:outputText value="#{item.location}" title="#{item.location}"/>
         </p:column>
         <p:column headerText="#{msgs.userGroups}" sortBy="#{item.userGroups.title.keyword}">
-            <ui:repeat var="usergroup"
-                       value="#{item.userGroups}"
-                       varStatus="status">
-                <h:outputText value="#{usergroup.title}"/>
-                <h:outputText value=", " rendered="#{not status.last}"/>
-            </ui:repeat>
+            <h:outputText value="#{BenutzerverwaltungForm.getUsergroupsAsString(item)}" title="#{BenutzerverwaltungForm.getUsergroupsAsString(item)}"/>
         </p:column>
-        <p:column headerText="#{msgs.clients}">
-            <ui:repeat var="client" value="#{item.clients}" varStatus="status">
+        <p:column headerText="#{msgs.clients}" sortBy="#{item.clientName}">
+            <ui:repeat var="client"
+                       value="#{item.clients}"
+                       varStatus="status">
                 <h:outputText value="#{client.name}"/>
                 <h:outputText value=", " rendered="#{not status.last}"/>
             </ui:repeat>
         </p:column>
         <p:column headerText="#{msgs.projects}" sortBy="#{item.projects.title.keyword}">
-            <ui:repeat var="project"
-                       value="#{item.projects}"
-                       varStatus="status">
-                <h:outputText value="#{project.title}"/>
-                <h:outputText value=", " rendered="#{not status.last}"/>
-            </ui:repeat>
+            <h:outputText value="#{BenutzerverwaltungForm.getProjectsAsString(item)}" title="#{BenutzerverwaltungForm.getProjectsAsString(item)}"/>
         </p:column>
-        <p:column headerText="#{msgs.active}" styleClass="checkboxColumn">
+        <p:column headerText="#{msgs.active}" styleClass="checkboxColumn" width="80px">
             <h:outputText>
                 <ui:fragment rendered="#{UserForm.checkUserLoggedIn(item)}">
                     <i class="fa fa-check-square-o fa-lg checkbox-checked"/>

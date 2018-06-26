@@ -21,12 +21,16 @@
                  var="item"
                  value="#{TemplateForm.lazyDTOModel}"
                  lazy="true"
-                 paginator="true"
+                 paginator="#{not ProjekteForm.listLiveScroll}"
+                 scrollable="true"
+                 scrollRows="#{LoginForm.myBenutzer.tableSize}"
+                 liveScroll="#{ProjekteForm.listLiveScroll}"
                  rows="#{LoginForm.myBenutzer.tableSize}"
+                 resizableColumns="true"
                  paginatorTemplate="{FirstPageLink} {PreviousPageLink} {CurrentPageReport} {NextPageLink} {LastPageLink}"
                  paginatorPosition="bottom">
 
-        <p:ajax event="rowToggle" oncomplete="registerRowToggleEvents();" />
+        <ui:include src="/WEB-INF/templates/includes/ajaxLoading.xhtml"/>
 
         <p:column style="width: 16px;">
             <p:rowToggler/>

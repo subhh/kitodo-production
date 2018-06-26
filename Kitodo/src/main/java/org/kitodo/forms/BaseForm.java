@@ -31,6 +31,7 @@ public class BaseForm implements Serializable {
     private static final String TEMPLATE_ROOT = "/pages/";
     private int activeTabId = 0;
     private boolean saveDisabled = true;
+    private boolean listLiveScroll = true;
 
     // error messages
     protected static final String ERROR_CREATING = "errorCreating";
@@ -167,5 +168,23 @@ public class BaseForm implements Serializable {
      */
     public void setSaveDisabled(boolean saveDisabled) {
         this.saveDisabled = saveDisabled;
+    }
+
+    /**
+     * Get boolean flag controlling the live list scrolling of data tables.
+     *
+     * @return flag indicating whether live list scrolling is active or not.
+     */
+    public boolean getListLiveScroll() {
+        return this.listLiveScroll;
+    }
+
+    /**
+     * Set flag controlling the live list scrolling of data tables.
+     *
+     * @param listLiveScroll true or false
+     */
+    public void setListLiveScroll(boolean listLiveScroll) {
+        this.listLiveScroll = listLiveScroll;
     }
 }

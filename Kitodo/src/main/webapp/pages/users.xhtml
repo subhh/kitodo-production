@@ -43,6 +43,14 @@
                             icon="ui-icon-plusthick"/>
             </p:menuButton>
         </h:form>
+        <h:form>
+            <p:selectBooleanCheckbox id="liveScrollMode"
+                                     title="#{msgs.liveScroll}"
+                                     value="#{BenutzerverwaltungForm.listLiveScroll}"
+                                     styleClass="input listModeSwitch">
+                <p:ajax event="change" update="usersTabView" onstart="PF('loadingDialog').show()" oncomplete="PF('loadingDialog').hide()"/>
+            </p:selectBooleanCheckbox>
+        </h:form>
     </ui:define>
 
     <ui:define name="pageTabView">

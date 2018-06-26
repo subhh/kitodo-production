@@ -20,13 +20,15 @@
                  value="#{ProjectForm.lazyDTOModel}"
                  lazy="true"
                  id="projectsTable"
-                 paginator="true"
+                 paginator="#{not ProjekteForm.listLiveScroll}"
+                 scrollable="true"
+                 scrollRows="#{LoginForm.myBenutzer.tableSize}"
+                 liveScroll="#{ProjekteForm.listLiveScroll}"
                  rows="#{LoginForm.myBenutzer.tableSize}"
+                 resizableColumns="true"
                  paginatorTemplate="{FirstPageLink} {PreviousPageLink} {CurrentPageReport} {NextPageLink} {LastPageLink}"
                  paginatorPosition="bottom">
-
-        <p:ajax event="rowToggle" oncomplete="registerRowToggleEvents();" />
-
+        <ui:include src="/WEB-INF/templates/includes/ajaxLoading.xhtml"/>
         <p:column style="width: 16px;">
             <p:rowToggler/>
         </p:column>
@@ -39,7 +41,7 @@
             <h:outputText value="#{item.metsRightsOwner}"/>
         </p:column>
 
-        <p:column headerText="#{msgs.active}" styleClass="checkboxColumn">
+        <p:column headerText="#{msgs.active}" styleClass="checkboxColumn" sortBy="#{item.active}">
             <h:outputText>
                 <ui:fragment rendered="#{item.isActive()}">
                     <i class="fa fa-check-square-o fa-lg checkbox-checked"/>

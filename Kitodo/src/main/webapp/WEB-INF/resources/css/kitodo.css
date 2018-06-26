@@ -908,6 +908,11 @@ main i.fa {
     width: 100%;
 }
 
+.ui-column-resizer:not(last-child):hover {
+    border-right: 1px dotted #999999;
+}
+
+
 /*----------------------------------------------------------------------
 Metadata Editor
 ----------------------------------------------------------------------*/
@@ -1415,6 +1420,25 @@ tbody#projectsTabView\:projectsTable_data > tr.ui-widget-content > td {
 .so-folder-use {
     margin: 0 15px 1.3em 15px;
     width: calc(100% - 64px);
+}
+
+.listModeSwitch {
+    display: inline-block;
+    float: right;
+    margin-left: 20px;
+    width: 36px;
+}
+
+.listModeSwitch .ui-chkbox-box {
+    width: 36px !important;
+    height: 36px !important;
+}
+
+table[role="grid"] td[role="gridcell"] {
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    cursor: default;
 }
 
 /*----------------------------------------------------------------------

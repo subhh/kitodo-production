@@ -20,20 +20,24 @@
                  var="item"
                  value="#{RulesetForm.lazyDTOModel}"
                  lazy="true"
-                 paginator="true"
+                 paginator="#{not ProjekteForm.listLiveScroll}"
+                 scrollable="true"
+                 scrollRows="#{LoginForm.myBenutzer.tableSize}"
+                 liveScroll="#{ProjekteForm.listLiveScroll}"
                  rows="#{LoginForm.myBenutzer.tableSize}"
+                 resizableColumns="true"
                  paginatorTemplate="{FirstPageLink} {PreviousPageLink} {CurrentPageReport} {NextPageLink} {LastPageLink}"
                  paginatorPosition="bottom">
-
+        <ui:include src="/WEB-INF/templates/includes/ajaxLoading.xhtml"/>
         <p:column headerText="#{msgs.title}" sortBy="#{item.title.keyword}">
-            <h:outputText value="#{item.title}"/>
+            <h:outputText value="#{item.title}" title="#{item.title}"/>
         </p:column>
 
         <p:column headerText="#{msgs.file}" sortBy="#{item.file.keyword}">
-            <h:outputText value="#{item.file}"/>
+            <h:outputText value="#{item.file}" title="#{item.file}"/>
         </p:column>
 
-        <p:column headerText="#{msgs.metadataSortByRuleset}" styleClass="checkboxColumn" style="width: initial">
+        <p:column headerText="#{msgs.metadataSortByRuleset}" styleClass="checkboxColumn" sortBy="#{item.orderMetadataByRuleset}" style="width: initial">
             <ui:fragment rendered="#{item.orderMetadataByRuleset}">
                 <i class="fa fa-check-square-o fa-lg checkbox-checked"/>
             </ui:fragment>

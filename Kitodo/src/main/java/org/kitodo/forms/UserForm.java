@@ -19,6 +19,7 @@ import java.util.ArrayList;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Objects;
+import java.util.stream.Collectors;
 
 import javax.enterprise.context.SessionScoped;
 import javax.inject.Named;
@@ -447,5 +448,21 @@ public class UserForm extends BaseForm {
         } catch (NoSuchAlgorithmException e) {
             Helper.setErrorMessage("ldap error", logger, e);
         }
+    }
+
+    /**
+     * Returns a String containing the names of the user groups to which the given user belongs, separated by ", ".
+     * @return String containing the names of the user groups th which the given user belongs.
+     */
+    public String getUsergroupsAsString(UserDTO user) {
+        return String.join(", ", user.getUserGroups().stream().map(UserGroupDTO::getTitle).collect(Collectors.toList()));
+    }
+
+    /**
+     * Returns a String containing the names of the user groups to which the given user belongs, separated by ", ".
+     * @return String containing the names of the user groups th which the given user belongs.
+     */
+    public String getProjectsAsString(UserDTO user) {
+        return String.join(", ", user.getProjects().stream().map(ProjectDTO::getTitle).collect(Collectors.toList()));
     }
 }

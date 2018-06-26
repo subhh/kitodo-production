@@ -20,12 +20,17 @@
                  id="userGroupsTable"
                  value="#{UserGroupForm.lazyDTOModel}"
                  lazy="true"
-                 paginator="true"
+                 paginator="#{not BenutzerverwaltungForm.listLiveScroll}"
+                 scrollable="true"
+                 scrollRows="#{LoginForm.myBenutzer.tableSize}"
+                 liveScroll="#{BenutzerverwaltungForm.listLiveScroll}"
                  rows="#{LoginForm.myBenutzer.tableSize}"
+                 resizableColumns="true"
                  paginatorTemplate="{FirstPageLink} {PreviousPageLink} {CurrentPageReport} {NextPageLink} {LastPageLink}"
                  paginatorPosition="bottom">
+        <ui:include src="/WEB-INF/templates/includes/ajaxLoading.xhtml"/>
         <p:column headerText="#{msgs.userGroup}" sortBy="#{item.title.keyword}">
-            <h:outputText value="#{item.title}"/>
+            <h:outputText value="#{item.title}" title="#{item.title}"/>
         </p:column>
         <p:column headerText="#{msgs.actions}" styleClass="actionsColumn">
             <h:form id="actionForm">

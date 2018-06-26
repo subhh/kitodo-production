@@ -75,6 +75,11 @@ input.ui-state-error {
     background-color: var(--error-background) !important;
 }
 
+.inactive-action {
+    color: #d8d8d8 !important;
+    cursor: default;
+}
+
 .ui-state-hover,
 .ui-widget-content .ui-state-hover,
 .ui-widget-header .ui-state-hover,

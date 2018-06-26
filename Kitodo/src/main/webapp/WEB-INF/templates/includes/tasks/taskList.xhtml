@@ -16,7 +16,14 @@
         xmlns:f="http://xmlns.jcp.org/jsf/core"
         xmlns:h="http://xmlns.jcp.org/jsf/html"
         xmlns:p="http://primefaces.org/ui">
-    <p:dataTable id="taskTable" var="item" value="#{CurrentTaskForm.lazyDTOModel}" lazy="true" paginator="true"
+    <p:dataTable id="taskTable"
+                 var="item"
+                 value="#{CurrentTaskForm.lazyDTOModel}"
+                 lazy="true"
+                 paginator="#{not AktuelleSchritteForm.listLiveScroll}"
+                 scrollable="true"
+                 scrollRows="#{LoginForm.myBenutzer.tableSize}"
+                 virtualScroll="#{AktuelleSchritteForm.listLiveScroll}"
                  rows="#{LoginForm.myBenutzer.tableSize}"
                  paginatorTemplate="{FirstPageLink} {PreviousPageLink} {CurrentPageReport} {NextPageLink} {LastPageLink}"
                  paginatorPosition="bottom">
@@ -27,11 +34,11 @@
             <p:rowToggler/>
         </p:column>
 
-        <p:column headerText="#{msgs.task}">
+        <p:column headerText="#{msgs.task}" sortBy="#{item.title.keyword}">
             <h:outputText value="#{item.title}"/>
         </p:column>
 
-        <p:column headerText="#{msgs.process}">
+        <p:column headerText="#{msgs.process}" sortBy="#{item.processForTask.title.keyword}">
             <h:link id="editProcess" outcome="/pages/processEdit" title="#{msgs.processEdit}">
                 <i class="fa fa-pencil-square-o fa-lg"/>
                 <f:param name="id" value="#{item.process.id}"/>

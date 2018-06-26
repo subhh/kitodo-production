@@ -18,6 +18,7 @@
     xmlns:p="http://primefaces.org/ui">
     <p:dataTable var="item" id="ldapGroupsTable" value="#{LdapGroupForm.ldapGroups}" lazy="true" paginator="true"
                  rows="#{LoginForm.myBenutzer.tableSize}"
+                 resizableColumns="true"
                  paginatorTemplate="{FirstPageLink} {PreviousPageLink} {CurrentPageReport} {NextPageLink} {LastPageLink}"
                  paginatorPosition="bottom">
         <p:column headerText="#{msgs.ldapGroup}">
