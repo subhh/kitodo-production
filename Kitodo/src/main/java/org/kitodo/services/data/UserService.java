@@ -598,7 +598,7 @@ public class UserService extends SearchService<User, UserDTO, UserDAO> implement
                 }
                 for (String sortField : sortObject.keySet()) {
                     SortOrder sortOrder = sortObject.get(sortField).toString().equals("asc") ? SortOrder.ASC : SortOrder.DESC;
-                    if (!Arrays.stream(UserTypeField.values()).map(UserTypeField::getName).collect(Collectors.toList()).contains(sortField)) {
+                    if (!Arrays.stream(UserTypeField.values()).map(UserTypeField::getKey).collect(Collectors.toList()).contains(sortField)) {
                         logger.error("ERROR: '" + sortField + "' is not a valid user type field!");
                         return "";
                     } else {
