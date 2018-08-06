@@ -584,32 +584,6 @@ public class UserService extends SearchService<User, UserDTO, UserDAO> implement
         return SortBuilders.fieldSort(UserTypeField.LOGIN.getKey()).order(SortOrder.ASC).toString();
     }
 
-    private String sortBy(String sortParameter) {
-        String[] sortParameterParts = sortParameter.split(":");
-        if (sortParameterParts.length != 2) {
-            logger.error("ERROR: unable to sort users by '" + sortParameter + "'!");
-            return "";
-        } else {
-            try (JsonReader jsonReader = Json.createReader(new StringReader(sortParameter))) {
-                JsonObject sortObject = jsonReader.readObject();
-                if (sortObject.keySet().size() > 1) {
-                    logger.error("ERROR: unable to determine sort parameter in JSON string " + sortParameter);
-                    return "";
-                }
-                for (String sortField : sortObject.keySet()) {
-                    SortOrder sortOrder = sortObject.get(sortField).toString().equals("asc") ? SortOrder.ASC : SortOrder.DESC;
-                    if (!Arrays.stream(UserTypeField.values()).map(UserTypeField::getKey).collect(Collectors.toList()).contains(sortField)) {
-                        logger.error("ERROR: '" + sortField + "' is not a valid user type field!");
-                        return "";
-                    } else {
-                        return SortBuilders.fieldSort(sortField).order(sortOrder).toString();
-                    }
-                }
-            }
-        }
-        return "";
-    }
-
     /**
      * Get all active users sorted by surname and name.
      *
