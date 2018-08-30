@@ -12,6 +12,7 @@
 package de.sub.goobi.forms;
 
 import de.sub.goobi.helper.Helper;
+import de.sub.goobi.helper.servletfilter.NavigationFilter;
 
 import java.text.MessageFormat;
 import java.util.ArrayList;
@@ -80,7 +81,7 @@ public class BenutzergruppenForm extends BasisForm {
     public String save() {
         try {
             this.serviceManager.getUserGroupService().save(this.userGroup);
-            return usergroupListPath;
+            return NavigationFilter.getBacklink();
         } catch (DataException e) {
             Helper.setErrorMessage("errorSaving", new Object[] {Helper.getTranslation(USER_GROUP) }, logger, e);
             return null;
@@ -115,7 +116,7 @@ public class BenutzergruppenForm extends BasisForm {
             Helper.setErrorMessage("errorDeleting", new Object[] {Helper.getTranslation(USER_GROUP) }, logger, e);
             return null;
         }
-        return usergroupListPath;
+        return NavigationFilter.getBacklink();
     }
 
     /**

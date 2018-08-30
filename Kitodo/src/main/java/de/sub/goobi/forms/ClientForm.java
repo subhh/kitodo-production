@@ -12,6 +12,7 @@
 package de.sub.goobi.forms;
 
 import de.sub.goobi.helper.Helper;
+import de.sub.goobi.helper.servletfilter.NavigationFilter;
 
 import java.util.Objects;
 
@@ -52,7 +53,7 @@ public class ClientForm extends BasisForm {
     public String save() {
         try {
             this.serviceManager.getClientService().save(this.client);
-            return "/pages/users?" + REDIRECT_PARAMETER;
+            return NavigationFilter.getBacklink();
         } catch (DataException e) {
             Helper.setErrorMessage("errorSaving", new Object[] {Helper.getTranslation("client") }, logger, e);
             return null;

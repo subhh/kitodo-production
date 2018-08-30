@@ -13,6 +13,7 @@ package org.kitodo.forms;
 
 import de.sub.goobi.config.ConfigCore;
 import de.sub.goobi.helper.Helper;
+import de.sub.goobi.helper.servletfilter.NavigationFilter;
 
 import java.io.IOException;
 import java.io.InputStream;
@@ -54,7 +55,6 @@ public class TemplateForm extends TemplateBaseForm {
     private transient ServiceManager serviceManager = new ServiceManager();
     private static final String ERROR_LOADING_ONE = "errorLoadingOne";
     private static final String TEMPLATE = "template";
-    private String templateListPath = MessageFormat.format(REDIRECT_PATH, "projects");
     private String templateEditPath = MessageFormat.format(REDIRECT_PATH, "templateEdit");
     private String taskEditPath = MessageFormat.format(REDIRECT_PATH, "taskTemplateEdit");
 
@@ -231,7 +231,7 @@ public class TemplateForm extends TemplateBaseForm {
         } catch (Exception e) {
             logger.error(e.getMessage(), e);
         }
-        return templateListPath;
+        return NavigationFilter.getBacklink();
     }
 
     /**

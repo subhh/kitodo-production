@@ -18,6 +18,7 @@ import de.sub.goobi.helper.BatchStepHelper;
 import de.sub.goobi.helper.Helper;
 import de.sub.goobi.helper.WebDav;
 import de.sub.goobi.helper.exceptions.ExportFileException;
+import de.sub.goobi.helper.servletfilter.NavigationFilter;
 import de.sub.goobi.metadaten.MetadataLock;
 
 import java.io.IOException;
@@ -86,7 +87,6 @@ public class AktuelleSchritteForm extends BasisForm {
     private static final String ERROR_SAVING = "errorSaving";
     private static final String PROCESS = "process";
     private static final String WORK_TASK = "task";
-    private String taskListPath = MessageFormat.format(REDIRECT_PATH, "tasks");
     private String taskEditPath = MessageFormat.format(REDIRECT_PATH, "currentTasksEdit");
     private String taskBatchEditPath = MessageFormat.format(REDIRECT_PATH, "taskBatchEdit");
 
@@ -258,7 +258,7 @@ public class AktuelleSchritteForm extends BasisForm {
         } catch (DataException e) {
             Helper.setErrorMessage(ERROR_SAVING, new Object[] {Helper.getTranslation(WORK_TASK) }, logger, e);
         }
-        return taskListPath;
+        return NavigationFilter.getBacklink();
     }
 
     /**
@@ -269,7 +269,7 @@ public class AktuelleSchritteForm extends BasisForm {
     public String schrittDurchBenutzerAbschliessen() throws DataException, IOException {
         setCurrentTask(serviceManager.getWorkflowControllerService().closeTaskByUser(this.currentTask));
         serviceManager.getTaskService().save(this.currentTask);
-        return taskListPath;
+        return NavigationFilter.getBacklink();
     }
 
     /**
@@ -309,7 +309,7 @@ public class AktuelleSchritteForm extends BasisForm {
             Helper.setErrorMessage(ERROR_SAVING, new Object[] {Helper.getTranslation(WORK_TASK) }, logger, e);
         }
         setProblem(serviceManager.getWorkflowControllerService().getProblem());
-        return taskListPath;
+        return NavigationFilter.getBacklink();
     }
 
     /**
@@ -337,7 +337,7 @@ public class AktuelleSchritteForm extends BasisForm {
             Helper.setErrorMessage(ERROR_SAVING, new Object[] {Helper.getTranslation(WORK_TASK) }, logger, e);
         }
         setSolution(serviceManager.getWorkflowControllerService().getSolution());
-        return taskListPath;
+        return NavigationFilter.getBacklink();
     }
 
     /**
@@ -355,7 +355,7 @@ public class AktuelleSchritteForm extends BasisForm {
          */
         if (!fertigListe.isEmpty() && this.nurOffeneSchritte) {
             this.nurOffeneSchritte = false;
-            return taskListPath;
+            return NavigationFilter.getBacklink();
         }
         for (URI element : fertigListe) {
             String id = element.toString()
@@ -819,15 +819,6 @@ public class AktuelleSchritteForm extends BasisForm {
      */
     public List<Task> getTasksInProgress() {
         return serviceManager.getUserService().getTasksInProgress(this.user);
-    }
-
-    /**
-     * Get taskListPath.
-     *
-     * @return value of taskListPath
-     */
-    public String getTaskListPath() {
-        return taskListPath;
     }
 
     private int getTaskIdForPath() {

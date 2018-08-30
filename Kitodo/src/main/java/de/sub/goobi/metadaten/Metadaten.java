@@ -19,6 +19,7 @@ import de.sub.goobi.helper.Transliteration;
 import de.sub.goobi.helper.VariableReplacer;
 import de.sub.goobi.helper.XmlArtikelZaehlen;
 import de.sub.goobi.helper.XmlArtikelZaehlen.CountType;
+import de.sub.goobi.helper.servletfilter.NavigationFilter;
 import de.unigoettingen.sub.commons.contentlib.exceptions.ImageManagerException;
 import de.unigoettingen.sub.commons.contentlib.exceptions.ImageManipulatorException;
 
@@ -246,9 +247,6 @@ public class Metadaten {
             "metadataWrapperPanel",
             "commentWrapperPanel",
             "galleryWrapperPanel");
-    private String referringView = "processes";
-
-
 
     /**
      * Konstruktor.
@@ -324,7 +322,7 @@ public class Metadaten {
         calculateMetadataAndImages();
         cleanupMetadata();
         if (storeMetadata()) {
-            return "/pages/processes?faces-redirect=true";
+            return NavigationFilter.getBacklink();
         } else {
             Helper.setMessage("XML could not be saved");
             return "";
@@ -4155,13 +4153,4 @@ public class Metadaten {
             Helper.setErrorMessage("Unable to find process with ID " + process.getId(), logger, e);
         }
     }
-
-    public void setReferringView(String referringView) {
-        this.referringView = referringView;
-    }
-
-    public String getReferringView() {
-        return this.referringView;
-    }
-
 }

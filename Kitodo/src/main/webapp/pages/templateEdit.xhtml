@@ -47,7 +47,7 @@
                          style="display:none;"/>
         <p:button id="cancel"
                   value="#{msgs.cancel}"
-                  outcome="#{'projects'}"
+                  outcome="#{NavigationFilter.getBacklink()}"
                   onclick="setConfirmUnload(false);"
                   icon="fa fa-times fa-lg"
                   iconPos="right"

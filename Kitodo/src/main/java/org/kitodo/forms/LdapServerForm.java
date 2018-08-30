@@ -13,6 +13,7 @@ package org.kitodo.forms;
 
 import de.sub.goobi.forms.BasisForm;
 import de.sub.goobi.helper.Helper;
+import de.sub.goobi.helper.servletfilter.NavigationFilter;
 
 import java.text.MessageFormat;
 import java.util.ArrayList;
@@ -74,7 +75,7 @@ public class LdapServerForm extends BasisForm {
     public String save() {
         try {
             this.serviceManager.getLdapServerService().saveToDatabase(this.ldapServer);
-            return ldapServerListPath;
+            return NavigationFilter.getBacklink();
         } catch (DAOException e) {
             Helper.setErrorMessage("errorSaving", new Object[] {Helper.getTranslation("ldapServer") }, logger, e);
             return null;

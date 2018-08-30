@@ -12,6 +12,7 @@
 package de.sub.goobi.forms;
 
 import de.sub.goobi.helper.Helper;
+import de.sub.goobi.helper.servletfilter.NavigationFilter;
 
 import java.io.File;
 import java.io.IOException;
@@ -58,7 +59,6 @@ public class BenutzerverwaltungForm extends BasisForm {
     private String password;
     private static final String ERROR_DATABASE_READING = "errorDatabaseReading";
     private static final String ERROR_SAVING = "errorSaving";
-    private String userListPath = MessageFormat.format(REDIRECT_PATH, "users");
     private String userEditPath = MessageFormat.format(REDIRECT_PATH, "userEdit");
 
     /**
@@ -108,7 +108,7 @@ public class BenutzerverwaltungForm extends BasisForm {
             if (this.serviceManager.getUserService().getAmountOfUsersWithExactlyTheSameLogin(id, login) == 0) {
                 this.userObject.setPassword(passwordEncoder.encrypt(this.password));
                 this.serviceManager.getUserService().save(this.userObject);
-                return userListPath;
+                return NavigationFilter.getBacklink();
             } else {
                 Helper.setErrorMessage("loginInUse");
                 return null;

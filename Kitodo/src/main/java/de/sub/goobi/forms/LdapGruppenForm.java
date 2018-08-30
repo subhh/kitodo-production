@@ -12,6 +12,7 @@
 package de.sub.goobi.forms;
 
 import de.sub.goobi.helper.Helper;
+import de.sub.goobi.helper.servletfilter.NavigationFilter;
 
 import java.text.MessageFormat;
 import java.util.ArrayList;
@@ -35,7 +36,6 @@ public class LdapGruppenForm extends BasisForm {
     private transient ServiceManager serviceManager = new ServiceManager();
     private static final Logger logger = LogManager.getLogger(LdapGruppenForm.class);
     private static final String LDAP_GROUP = "ldapgruppe";
-    private String ldapgrouopListPath = MessageFormat.format(REDIRECT_PATH, "users");
     private String ldapgrouopEditPath = MessageFormat.format(REDIRECT_PATH, "ldapgroupEdit");
 
     /**
@@ -70,7 +70,7 @@ public class LdapGruppenForm extends BasisForm {
     public String saveLdapGroup() {
         try {
             this.serviceManager.getLdapGroupService().saveToDatabase(this.myLdapGruppe);
-            return ldapgrouopListPath;
+            return NavigationFilter.getBacklink();
         } catch (DAOException e) {
             Helper.setErrorMessage("errorSaving", new Object[] {Helper.getTranslation(LDAP_GROUP) }, logger, e);
             return null;
@@ -89,7 +89,7 @@ public class LdapGruppenForm extends BasisForm {
             Helper.setErrorMessage("errorDeleting", new Object[] {Helper.getTranslation(LDAP_GROUP) }, logger, e);
             return null;
         }
-        return ldapgrouopListPath;
+        return NavigationFilter.getBacklink();
     }
 
     /**

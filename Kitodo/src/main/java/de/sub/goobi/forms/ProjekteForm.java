@@ -12,6 +12,7 @@
 package de.sub.goobi.forms;
 
 import de.sub.goobi.helper.Helper;
+import de.sub.goobi.helper.servletfilter.NavigationFilter;
 
 import java.io.IOException;
 import java.text.MessageFormat;
@@ -36,6 +37,7 @@ import javax.xml.bind.JAXBException;
 
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
+
 import org.kitodo.config.xml.fileformats.FileFormat;
 import org.kitodo.config.xml.fileformats.FileFormatsConfig;
 import org.kitodo.data.database.beans.Folder;
@@ -78,7 +80,6 @@ public class ProjekteForm extends BasisForm {
     private boolean lockedTechnical;
     private boolean copyTemplates;
     private static final String PROJECT = "project";
-    private String projectListPath = MessageFormat.format(REDIRECT_PATH, "projects");
     private String projectEditPath = MessageFormat.format(REDIRECT_PATH, "projectEdit");
 
     /**
@@ -140,7 +141,7 @@ public class ProjekteForm extends BasisForm {
         this.newFolders = new ArrayList<>();
         // resetting the List of folders marked for deletion
         this.deletedFolders = new ArrayList<>();
-        return projectListPath;
+        return NavigationFilter.getBacklink();
     }
 
     /**
@@ -203,7 +204,7 @@ public class ProjekteForm extends BasisForm {
                     setCopyTemplates(false);
                 }
                 serviceManager.getProjectService().save(this.myProjekt);
-                return projectListPath;
+                return NavigationFilter.getBacklink();
             } catch (DataException e) {
                 Helper.setErrorMessage("errorSaving", new Object[] {Helper.getTranslation(PROJECT) }, logger, e);
                 return null;

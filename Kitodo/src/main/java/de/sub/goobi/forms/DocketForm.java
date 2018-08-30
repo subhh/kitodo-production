@@ -13,6 +13,7 @@ package de.sub.goobi.forms;
 
 import de.sub.goobi.config.ConfigCore;
 import de.sub.goobi.helper.Helper;
+import de.sub.goobi.helper.servletfilter.NavigationFilter;
 
 import java.io.File;
 import java.io.IOException;
@@ -50,7 +51,6 @@ public class DocketForm extends BasisForm {
     private transient ServiceManager serviceManager = new ServiceManager();
     private static final Logger logger = LogManager.getLogger(DocketForm.class);
 
-    private String docketListPath = MessageFormat.format(REDIRECT_PATH, "projects");
     private String docketEditPath = MessageFormat.format(REDIRECT_PATH, "docketEdit");
 
     @Named("ProjekteForm")
@@ -93,7 +93,7 @@ public class DocketForm extends BasisForm {
                     return null;
                 }
                 serviceManager.getDocketService().save(myDocket);
-                return docketListPath;
+                return NavigationFilter.getBacklink();
             } else {
                 Helper.setErrorMessage("docketNotFound");
                 return null;

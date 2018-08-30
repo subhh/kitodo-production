@@ -29,6 +29,7 @@ import de.sub.goobi.helper.GoobiScript;
 import de.sub.goobi.helper.Helper;
 import de.sub.goobi.helper.WebDav;
 import de.sub.goobi.helper.exceptions.ExportFileException;
+import de.sub.goobi.helper.servletfilter.NavigationFilter;
 
 import java.io.File;
 import java.io.IOException;
@@ -49,6 +50,7 @@ import javax.faces.model.SelectItem;
 import javax.inject.Named;
 import javax.servlet.ServletContext;
 import javax.servlet.ServletOutputStream;
+import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.xml.bind.JAXBException;
 
@@ -126,7 +128,6 @@ public class ProzessverwaltungForm extends TemplateBaseForm {
     private static final String PROPERTIES_SAVED = "propertiesSaved";
     private List<ProcessDTO> selectedProcesses = new ArrayList<>();
     String processListPath = MessageFormat.format(REDIRECT_PATH, "processes");
-    private String processEditPath = MessageFormat.format(REDIRECT_PATH, "processEdit");
     private String taskEditPath = MessageFormat.format(REDIRECT_PATH, "taskEdit");
 
     /**
@@ -197,7 +198,7 @@ public class ProzessverwaltungForm extends TemplateBaseForm {
      */
     public String saveAndRedirect() {
         save();
-        return processListPath;
+        return NavigationFilter.getBacklink();
     }
 
     /**
@@ -445,7 +446,7 @@ public class ProzessverwaltungForm extends TemplateBaseForm {
      */
     public String saveTaskAndRedirect() {
         saveTask(this.task, this.process, PROCESS, serviceManager.getTaskService());
-        return processEditPath + "&id=" + (Objects.isNull(this.process.getId()) ? 0 : this.process.getId());
+        return NavigationFilter.getLocalRefererPath((HttpServletRequest) FacesContext.getCurrentInstance().getExternalContext().getRequest());
     }
 
     /**

@@ -13,6 +13,7 @@ package de.sub.goobi.forms;
 
 import de.sub.goobi.config.ConfigCore;
 import de.sub.goobi.helper.Helper;
+import de.sub.goobi.helper.servletfilter.NavigationFilter;
 
 import java.io.File;
 import java.io.IOException;
@@ -49,7 +50,6 @@ public class RulesetForm extends BasisForm {
     private transient ServiceManager serviceManager = new ServiceManager();
     private static final Logger logger = LogManager.getLogger(RulesetForm.class);
 
-    private String rulesetListPath = MessageFormat.format(REDIRECT_PATH, "projects");
     private String rulesetEditPath = MessageFormat.format(REDIRECT_PATH, "rulesetEdit");
 
     @Named("ProjekteForm")
@@ -92,7 +92,7 @@ public class RulesetForm extends BasisForm {
                     return null;
                 }
                 serviceManager.getRulesetService().save(this.ruleset);
-                return rulesetListPath;
+                return NavigationFilter.getBacklink();
             } else {
                 Helper.setErrorMessage("rulesetNotFound");
                 return null;
@@ -134,7 +134,7 @@ public class RulesetForm extends BasisForm {
             Helper.setErrorMessage("errorDeleting", new Object[] {Helper.getTranslation("ruleset") }, logger, e);
             return null;
         }
-        return rulesetListPath;
+        return NavigationFilter.getBacklink();
     }
 
     private boolean existsRulesetWithSameName() {
