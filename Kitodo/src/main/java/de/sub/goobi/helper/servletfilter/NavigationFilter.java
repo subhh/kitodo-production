@@ -44,7 +44,10 @@ public class NavigationFilter extends GenericFilterBean implements Serializable 
             // since we have two nested edit forms (for processes & tasks) we have to consider this special case
             // separately: going to or returning from taskEdit should _not_ update the backlink!
             if ( !referer.contains("taskEdit") && !requestURI.contains("taskEdit") ) {
-                backlink = referer.replace(getBaseURLWithContextPath(httpServletRequest), "");
+                // ignore page reloads
+                if (!referer.contains(requestURI)) {
+                    backlink = referer.replace(getBaseURLWithContextPath(httpServletRequest), "");
+                }
             }
         }
         chain.doFilter(request, response);
