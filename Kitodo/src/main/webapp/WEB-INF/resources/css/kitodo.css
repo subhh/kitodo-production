@@ -1179,6 +1179,15 @@ Column content
     margin: 0;
 }
 
+#addPagesDialog {
+    height: 130px;
+}
+
+#addPagesDialogForm\:numberOfPages_input {
+    width: 70%;
+    margin-right: 8px;
+}
+
 /*----------------------------------------------------------------------
 Footer
 ----------------------------------------------------------------------*/

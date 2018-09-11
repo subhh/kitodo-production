@@ -48,6 +48,9 @@
                         <h:form id="structureTreeForm">
                             <p:panel id="structurePanel">
                                 <ui:include src="/WEB-INF/templates/includes/metadataEditor/structure.xhtml" />
+                                <p:contextMenu for="structurePanel">
+                                    <p:menuitem value="Add pages" onclick="PF('addPagesDialog').show();"/>
+                                </p:contextMenu>
                             </p:panel>
                             <p:panel id="paginationPanel">
                                 <ui:include src="/WEB-INF/templates/includes/metadataEditor/pagination.xhtml" />
@@ -55,6 +58,7 @@
                         </h:form>
                         <ui:include src="/pages/incMeta/dialogs/dialogAddDocStrucType.xhtml"/>
                         <ui:include src="/pages/incMeta/dialogs/dialogEditPages.xhtml"/>
+                        <ui:include src="/WEB-INF/templates/includes/metadataEditor/addPagesDialog.xhtml"/>
                     </p:panel>
                 </div>
 

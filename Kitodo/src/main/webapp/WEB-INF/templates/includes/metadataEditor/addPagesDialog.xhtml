@@ -1,0 +1,40 @@
+<!--
+ *
+ * (c) Kitodo. Key to digital objects e. V. <contact@kitodo.org>
+ *
+ * This file is part of the Kitodo project.
+ *
+ * It is licensed under GNU General Public License version 3 or later.
+ *
+ * For the full copyright and license information, please read the
+ * GPL3-License.txt file that was distributed with this source code.
+ *
+-->
+
+<ui:composition
+        xmlns="http://www.w3.org/1999/xhtml"
+        xmlns:h="http://xmlns.jcp.org/jsf/html"
+        xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+        xmlns:p="http://primefaces.org/ui">
+
+    <p:dialog id="addPagesDialog"
+              widgetVar="addPagesDialog"
+              header="#{msgs.addPages}"
+              resizable="false"
+              modal="true"
+              appendTo="@(body)">
+        <h:form id="addPagesDialogForm">
+            <p:outputLabel for="numberOfPages" value="#{msgs.numberImages}"/>
+            <p:inputNumber id="numberOfPages"
+                           styleClass="input-with-button"
+                           minValue="1"
+                           decimalPlaces="0"
+                           class="input"/>
+            <p:commandButton value="Ok"
+                             onclick="PF('addPagesDialog').hide();"/>
+            <p:commandButton value="Cancel"
+                             onclick="PF('addPagesDialog').hide();"/>
+        </h:form>
+    </p:dialog>
+
+</ui:composition>
