@@ -29,10 +29,12 @@
                            styleClass="input-with-button"
                            minValue="1"
                            decimalPlaces="0"
+                           binding="#{numberNewPages}"
                            class="input"/>
             <p:commandButton value="Ok"
+                             action="#{Metadaten.addNewPagesToDocStruct(numberNewPages.value)}"
                              onclick="PF('addPagesDialog').hide();"/>
-            <p:commandButton value="Cancel"
+            <p:commandButton value="#{msgs.cancel}"
                              onclick="PF('addPagesDialog').hide();"/>
         </h:form>
     </p:dialog>

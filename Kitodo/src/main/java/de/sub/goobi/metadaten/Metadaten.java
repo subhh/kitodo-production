@@ -2183,6 +2183,13 @@ public class Metadaten {
         return null;
     }
 
+    public void addNewPagesToDocStruct(int numberOfNewPages) {
+        if (Objects.nonNull(this.docStruct)) {
+            System.out.println("Add " + numberOfNewPages + " new pages to doc struct " + this.docStruct.getDocStructType().getName());
+            // TODO: create dummy images and assign them to selected doc struct!
+        }
+    }
+
     /**
      * OCR.
      */
@@ -2682,6 +2689,12 @@ public class Metadaten {
                     dragDocStruct.getDocStructType() + " not allowed as child of " + dropDocStruct.getDocStructType());
             }
         }
+    }
+
+    public void onContextMenu(NodeSelectEvent nodeSelectEvent) {
+        DocStructInterface docStructInterface = (DocStructInterface) nodeSelectEvent.getTreeNode().getData();
+        setMyStrukturelement(docStructInterface);
+        System.out.println("Content menu listener called on doc struct " + this.docStruct.getDocStructType().getName());
     }
 
     public boolean isModeMoveStructureElement() {

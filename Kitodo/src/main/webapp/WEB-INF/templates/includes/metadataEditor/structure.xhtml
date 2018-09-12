@@ -17,8 +17,11 @@
         xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
         xmlns:p="http://primefaces.org/ui">
     <p:panel id="structureWrapperPanel" styleClass="wrapperPanel">
-        <p:tree value="#{Metadaten.treeNodes}" var="element"
-                selectionMode="single" id="docStruct"
+        <p:tree id="docStruct"
+                value="#{Metadaten.treeNodes}"
+                var="element"
+                selectionMode="single"
+                dynamic="true"
                 selection="#{Metadaten.selectedTreeNode}"
                 draggable="true" droppable="true" dragdropScope="DocStructTree">
             <p:ajax event="select" listener="#{Metadaten.onNodeSelect}"
@@ -30,6 +33,14 @@
                 <h:outputText value="#{elementType}"/> <h:outputText
                     value=" #{Metadaten.getLogicalPageNumber(element)}" rendered="#{elementType eq msgs.page}"/>
             </p:treeNode>
+            <p:ajax event="contextMenu"
+                    listener="#{Metadaten.onContextMenu}"
+                    update="structureTreeForm:paginationWrapperPanel,metadataWrapperPanel,commentWrapperPanel,galleryWrapperPanel,dialogEditPages"/>
         </p:tree>
+        <p:contextMenu for="docStruct">
+            <p:menuitem value="Add pages"
+                        icon="ui-icon-plus"
+                        onclick="PF('addPagesDialog').show();"/>
+        </p:contextMenu>
     </p:panel>
 </ui:composition>
