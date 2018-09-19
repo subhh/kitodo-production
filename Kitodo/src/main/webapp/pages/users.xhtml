@@ -46,7 +46,7 @@
         <h:form>
             <p:selectBooleanCheckbox id="liveScrollMode"
                                      title="#{msgs.liveScroll}"
-                                     value="#{BenutzerverwaltungForm.listLiveScroll}"
+                                     value="#{UserForm.listLiveScroll}"
                                      styleClass="input listModeSwitch">
                 <p:ajax event="change" update="usersTabView" onstart="PF('loadingDialog').show()" oncomplete="PF('loadingDialog').hide()"/>
             </p:selectBooleanCheckbox>

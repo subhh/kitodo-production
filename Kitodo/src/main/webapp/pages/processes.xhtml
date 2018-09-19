@@ -28,7 +28,7 @@
             <h:form>
                 <p:selectBooleanCheckbox id="liveScrollMode"
                                          title="#{msgs.liveScroll}"
-                                         value="#{ProzessverwaltungForm.listLiveScroll}"
+                                         value="#{ProcessForm.listLiveScroll}"
                                          styleClass="input listModeSwitch">
                     <p:ajax event="change" update="processesTabView" onstart="PF('loadingDialog').show()" oncomplete="PF('loadingDialog').hide()"/>
                 </p:selectBooleanCheckbox>

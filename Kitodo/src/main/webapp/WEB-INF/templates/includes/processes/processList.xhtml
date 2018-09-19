@@ -30,6 +30,7 @@
                      paginatorTemplate="{FirstPageLink} {PreviousPageLink} {CurrentPageReport} {NextPageLink} {LastPageLink}"
                      paginatorPosition="bottom">
             <ui:include src="/WEB-INF/templates/includes/ajaxLoading.xhtml"/>
+            <p:column styleClass="checkboxListColumn" selectionMode="multiple"/>
             <p:column id="titleColumn" headerText="#{msgs.processTitle}" filterBy="#{item.title}" sortBy="#{item.title.keyword}">
                 <h:outputText value="#{item.title}"/>
             </p:column>
@@ -43,12 +44,12 @@
                 <h:link id="editProcess" outcome="/pages/processEdit" title="#{msgs.processEdit}">
                     <i class="fa fa-pencil-square-o fa-lg"/>
                     <f:param name="referer" value="processes"/>
-                    <f:param name="id" value="#{process.id}"/>
+                    <f:param name="id" value="#{item.id}"/>
                 </h:link>
 
                 <h:commandLink id="readXML" action="#{Metadaten.readXml}" title="#{msgs.metadataEdit}">
                     <h:outputText><i class="fa fa-file-o"/></h:outputText>
-                    <f:param name="ProzesseID" value="#{process.id}"/>
+                    <f:param name="ProzesseID" value="#{item.id}"/>
                     <f:param name="BenutzerID" value="#{LoginForm.myBenutzer.id}"/>
                     <f:param name="zurueck" value="processList"/>
                     <f:setPropertyActionListener value="processes" target="#{Metadaten.referringView}"/>
@@ -58,14 +59,14 @@
 
                 <p:commandLink id="download" action="#{ProcessForm.downloadToHome}" title="#{msgs.linkHomeDirectory}">
                     <h:outputText><i class="fa fa-download"/></h:outputText>
-                    <f:setPropertyActionListener value="#{process.id}" target="#{ProcessForm.processByID}"/>
+                    <f:setPropertyActionListener value="#{item.id}" target="#{ProcessForm.processByID}"/>
                     <!-- TODO: add separate message in case it already exists and alert -->
                 </p:commandLink>
 
                 <p:commandLink id="upload" action="#{ProcessForm.uploadFromHome}"
                                title="#{msgs.deleteLinkHomeDirectory}">
                     <h:outputText><i class="fa fa-upload"/></h:outputText>
-                    <f:setPropertyActionListener value="#{process.id}" target="#{ProcessForm.processByID}"/>
+                    <f:setPropertyActionListener value="#{item.id}" target="#{ProcessForm.processByID}"/>
                     <p:confirm header="#{msgs.confirmDelete}" message="#{msgs.deleteLinkHomeDirectory}?"
                                icon="ui-icon-alert"/>
                 </p:commandLink>
@@ -73,34 +74,34 @@
                 <!-- TODO: could be used for adding text: http://blog.fontawesome.io/2014/05/19/stacking-text-and-icons/ -->
                 <p:commandLink id="exportLogXml" action="#{ProcessForm.createXML}" title="#{msgs.createXML}">
                     <h:outputText><i class="fa fa-file-code-o"/></h:outputText>
-                    <f:setPropertyActionListener value="#{process.id}" target="#{ProcessForm.processByID}"/>
+                    <f:setPropertyActionListener value="#{item.id}" target="#{ProcessForm.processByID}"/>
                 </p:commandLink>
 
                 <p:commandLink id="downloadDocket" action="#{ProcessForm.downloadDocket}" title="#{msgs.docketPrint}"
                                ajax="false">
                     <h:outputText><i class="fa fa-print"/></h:outputText>
-                    <f:setPropertyActionListener value="#{process.id}" target="#{ProcessForm.processByID}"/>
+                    <f:setPropertyActionListener value="#{item.id}" target="#{ProcessForm.processByID}"/>
                 </p:commandLink>
 
                 <h:commandLink action="#{ProcessForm.exportMets}" id="exportMets" title="#{msgs.exportMets}">
                     <h:outputText><i class="fa fa-file-code-o"/></h:outputText>
-                    <f:setPropertyActionListener value="#{process.id}" target="#{ProcessForm.processByID}"/>
+                    <f:setPropertyActionListener value="#{item.id}" target="#{ProcessForm.processByID}"/>
                 </h:commandLink>
 
                 <h:commandLink action="#{ProcessForm.exportPdf}" id="exportPdf" title="#{msgs.exportPdf}">
                     <h:outputText><i class="fa fa-file-pdf-o"/></h:outputText>
-                    <f:setPropertyActionListener value="#{process.id}" target="#{ProcessForm.processByID}"/>
+                    <f:setPropertyActionListener value="#{item.id}" target="#{ProcessForm.processByID}"/>
                 </h:commandLink>
 
                 <h:commandLink action="#{ProcessForm.exportDMS}" id="exportDms" title="#{msgs.exportDMS}">
                     <h:outputText><i class="fa fa-file-archive-o"/></h:outputText>
-                    <f:setPropertyActionListener value="#{process.id}" target="#{ProcessForm.processByID}"/>
+                    <f:setPropertyActionListener value="#{item.id}" target="#{ProcessForm.processByID}"/>
                 </h:commandLink>
 
                 <p:commandLink id="deleteProcess" action="#{ProcessForm.delete}" title="#{msgs.delete}"
                                update="processesTabView:processesForm:processesTable">
                     <h:outputText><i class="fa fa-trash-o"/></h:outputText>
-                    <f:setPropertyActionListener value="#{process.id}" target="#{ProcessForm.processByID}"/>
+                    <f:setPropertyActionListener value="#{item.id}" target="#{ProcessForm.processByID}"/>
                     <p:confirm header="#{msgs.confirmDelete}" message="#{msgs.confirmDeleteProcess}"
                                icon="ui-icon-alert"/>
                 </p:commandLink>
@@ -172,7 +173,7 @@
         <p:commandLink id="uploadAll" action="#{ProcessForm.uploadFromHomeForAll}"
                        title="#{msgs.deleteLinkHomeDirectory}">
             <h:outputText><i class="fa fa-upload"/> #{msgs.deleteLinkHomeDirectory}</h:outputText>
-            <f:setPropertyActionListener value="#{process.id}" target="#{ProcessForm.processByID}"/>
+            <f:setPropertyActionListener value="#{item.id}" target="#{ProcessForm.processByID}"/>
             <p:confirm header="#{msgs.confirmDelete}" message="#{msgs.deleteLinkHomeDirectory}?"
                        icon="ui-icon-alert"/>
         </p:commandLink>

@@ -20,11 +20,11 @@
                  id="usersTable"
                  value="#{UserForm.lazyDTOModel}"
                  lazy="true"
-                 paginator="#{not BenutzerverwaltungForm.listLiveScroll}"
+                 paginator="#{not UserForm.listLiveScroll}"
                  scrollable="true"
                  scrollRows="#{LoginForm.myBenutzer.tableSize}"
                  scrollHeight="90%"
-                 liveScroll="#{BenutzerverwaltungForm.listLiveScroll}"
+                 liveScroll="#{UserForm.listLiveScroll}"
                  rows="#{LoginForm.myBenutzer.tableSize}"
                  resizableColumns="true"
                  paginatorTemplate="{FirstPageLink} {PreviousPageLink} {CurrentPageReport} {NextPageLink} {LastPageLink}"
@@ -37,7 +37,7 @@
             <h:outputText value="#{item.location}" title="#{item.location}"/>
         </p:column>
         <p:column headerText="#{msgs.userGroups}" sortBy="#{item.userGroups.title.keyword}">
-            <h:outputText value="#{BenutzerverwaltungForm.getUsergroupsAsString(item)}" title="#{BenutzerverwaltungForm.getUsergroupsAsString(item)}"/>
+            <h:outputText value="#{UserForm.getUsergroupsAsString(item)}" title="#{UserForm.getUsergroupsAsString(item)}"/>
         </p:column>
         <p:column headerText="#{msgs.clients}" sortBy="#{item.clientName}">
             <ui:repeat var="client"
@@ -48,7 +48,7 @@
             </ui:repeat>
         </p:column>
         <p:column headerText="#{msgs.projects}" sortBy="#{item.projects.title.keyword}">
-            <h:outputText value="#{BenutzerverwaltungForm.getProjectsAsString(item)}" title="#{BenutzerverwaltungForm.getProjectsAsString(item)}"/>
+            <h:outputText value="#{UserForm.getProjectsAsString(item)}" title="#{UserForm.getProjectsAsString(item)}"/>
         </p:column>
         <p:column headerText="#{msgs.active}" styleClass="checkboxColumn" width="80px">
             <h:outputText>

@@ -33,6 +33,9 @@
                 <p:tabView/>
             </ui:insert>
         </p:panel>
+        <p:dialog widgetVar="loadingDialog" modal="true" draggable="false" closable="false" resizable="false" showHeader="false">
+            <p:graphicImage id="loading" alt="loading" value="/pages/images/ajax-loader.gif"/>
+        </p:dialog>
         <h:outputScript name="content.js" target="body" library="js"/>
     </ui:define>
 </ui:composition>

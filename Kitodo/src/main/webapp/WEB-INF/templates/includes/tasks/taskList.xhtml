@@ -20,10 +20,10 @@
                  var="item"
                  value="#{CurrentTaskForm.lazyDTOModel}"
                  lazy="true"
-                 paginator="#{not AktuelleSchritteForm.listLiveScroll}"
+                 paginator="#{not CurrentTaskForm.listLiveScroll}"
                  scrollable="true"
                  scrollRows="#{LoginForm.myBenutzer.tableSize}"
-                 virtualScroll="#{AktuelleSchritteForm.listLiveScroll}"
+                 virtualScroll="#{CurrentTaskForm.listLiveScroll}"
                  rows="#{LoginForm.myBenutzer.tableSize}"
                  paginatorTemplate="{FirstPageLink} {PreviousPageLink} {CurrentPageReport} {NextPageLink} {LastPageLink}"
                  paginatorPosition="bottom">
@@ -140,23 +140,23 @@
                 <h:panelGrid columns="2" style="margin-left:20px">
                     <h:outputText value="#{msgs.showAutomaticTasks}:"/>
                     <h:selectBooleanCheckbox id="showAutomaticTasks" value="#{CurrentTaskForm.showAutomaticTasks}"
-                                             style="margin-right:20px"/>
+                                             style="margin-right:20px;"/>
 
                     <h:outputText value="#{msgs.hideCorrectionTasks}:"/>
                     <h:selectBooleanCheckbox id="hideCorrectionTasks" value="#{CurrentTaskForm.hideCorrectionTasks}"
-                                             style="margin-right:20px"/>
+                                             style="margin-right:20px;"/>
 
 
                     <h:outputText value="#{msgs.showOnlyOwnTasks}:"/>
                     <h:selectBooleanCheckbox id="onlyOwnTasks" value="#{CurrentTaskForm.onlyOwnTasks}"
-                                             style="margin-right:20px"/>
+                                             style="margin-right:20px;"/>
 
                     <h:outputText value="#{msgs.showOnlyOpenTasks}:"/>
                     <h:selectBooleanCheckbox id="onlyOpenTasks" value="#{CurrentTaskForm.onlyOpenTasks}"
-                                             style="margin-right:20px"/>
+                                             style="margin-right:20px;"/>
                 </h:panelGrid>
 
-                <h:commandLink id="applyFilter" update="tasksTabView:taskTable" style="margin-left:24px" title="#{msgs.apply}">
+                <h:commandLink update="tasksTabView:taskTable" style="margin-left:24px;" title="#{msgs.apply}">
                     <h:outputText value="#{msgs.apply}"/>
                 </h:commandLink>
             </h:form>
