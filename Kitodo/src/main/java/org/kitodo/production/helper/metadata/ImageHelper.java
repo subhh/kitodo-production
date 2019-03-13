@@ -30,6 +30,7 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.HashMap;
 import java.util.Iterator;
+import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
 import java.util.Objects;
@@ -358,7 +359,14 @@ public class ImageHelper {
         List<URI> dataList = new ArrayList<>(finalFiles);
 
         if (!dataList.isEmpty()) {
-            List<URI> orderedFileNameList = prepareOrderedFileNameList(dataList);
+            List<URI> orderedFileNameList = new LinkedList<>();
+            try {
+                orderedFileNameList = prepareOrderedFileNameList(dataList);
+            } catch (NullPointerException e) {
+                logger.error(
+                        "Unable to sort pages (probably because other physical struct elements exist in physical struct map!);"
+                               + " message: " + e.getLocalizedMessage());
+            }
 
             if (orderedFileNameList.size() == dataList.size()) {
                 return orderedFileNameList;
