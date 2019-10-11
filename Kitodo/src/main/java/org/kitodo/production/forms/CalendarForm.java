@@ -681,11 +681,35 @@ public class CalendarForm implements Serializable {
     }
 
     /**
-     * Flips the calendar sheet back one year in
-     * time.
+     * Get the currently displayed year.
+     *
+     * @return the year to be displayed as java.lang.String
      */
-    public void backwardClick() {
+    public String getYear() {
+        return Integer.toString(yearShowing);
+    }
+
+    /**
+     * Set the currently displayed year.
+     *
+     * @param year to be displayed as java.lang.String
+     */
+    public void setYear(String year) {
+        yearShowing = Integer.parseInt(year);
+    }
+
+    /**
+     * Display the previous year in the calendar.
+     */
+    public void previousYear() {
         yearShowing -= 1;
+    }
+
+    /**
+     * Display the next year in the calendar.
+     */
+    public void nextYear() {
+        yearShowing += 1;
     }
 
     /**
@@ -794,14 +818,6 @@ public class CalendarForm implements Serializable {
                 course.clearProcesses();
             }
         }
-    }
-
-    /**
-     * Flips the calendar sheet forward one year in
-     * time.
-     */
-    public void forwardClick() {
-        yearShowing += 1;
     }
 
     /**
@@ -970,16 +986,6 @@ public class CalendarForm implements Serializable {
      */
     public boolean getUploadShowing() {
         return uploadShowing;
-    }
-
-    /**
-     * Returns the year to be shown in the calendar sheet
-     * as read-only property "year".
-     *
-     * @return the year to show on the calendar sheet
-     */
-    public String getYear() {
-        return Integer.toString(yearShowing);
     }
 
     /**
